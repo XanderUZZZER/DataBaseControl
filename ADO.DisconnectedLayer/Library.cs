@@ -17,21 +17,6 @@ namespace ADO.DisconnectedLayer
         DataTable books;
         string connectionString = ConfigurationManager.ConnectionStrings["LibraryContext"].ConnectionString;
 
-        public Library()
-        {
-            //string sql = @"SELECT * FROM Users;SELECT * FROM Books";
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    connection.Open();
-            //    adapter = new SqlDataAdapter(sql, connection);
-            //    ds = new DataSet();
-            //    adapter.Fill(ds);
-
-            //    Users = ds.Tables[0];
-            //    Books = ds.Tables[1];
-            //}
-        }
-
         public void AddBook(string name, string author, string publisher, int year)
         {
             string sql = @"SELECT * FROM Books;";
@@ -63,9 +48,10 @@ namespace ADO.DisconnectedLayer
                 library = new DataSet();
                 adapter.Fill(library);
                 books = library.Tables[0];
-
-                books.Rows.Remove(books.Rows.Remove);
-                SqlCommandBuilder commandBuilder = new SqlCommandBuilder(adapter);
+                DataRow rowToDelete = books.AsEnumerable().FirstOrDefault(row => row.Field<int>("ID") == id);
+                if (rowToDelete != null)
+                    rowToDelete.Delete();
+                SqlCommandBuilder cmd = new SqlCommandBuilder(adapter);
                 adapter.Update(books);
             }
         }

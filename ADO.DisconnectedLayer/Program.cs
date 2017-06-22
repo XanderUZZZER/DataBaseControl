@@ -16,7 +16,8 @@ namespace ADO.DisconnectedLayer
             //Console.WriteLine(lib.Users.Rows.Count);
             //Console.WriteLine(lib.Users.Columns.Count);
 
-            lib.AddBook("BDfsdf", "adfasdf", "asfgdfg", 9999);
+            //lib.AddBook("BDfsdf", "adfasdf", "asfgdfg", 9999);
+            lib.RemoveBook(2);
 
             Console.WriteLine("___________");
             Console.ReadLine();
